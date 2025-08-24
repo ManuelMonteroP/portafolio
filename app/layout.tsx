@@ -1,19 +1,19 @@
-import type { Metadata } from 'next'
-import './globals.css'
-
-export const metadata: Metadata = {
-  title: 'Manuel Montero',
-  description: 'Frontend Developer',
-}
+import type React from "react"
+import { LanguageProvider } from "../contexts/language-context"
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   )
 }
+
+
+import './globals.css'

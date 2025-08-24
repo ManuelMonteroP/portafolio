@@ -3,8 +3,12 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { Linkedin, ExternalLink, X, ChevronDown, ChevronUp } from "lucide-react"
+import { useLanguage } from "./contexts/language-context"
+import { LanguageSwitcher } from "./components/language-switcher"
 
 export default function Component() {
+  const { t } = useLanguage()
+
   // State to track active section
   const [activeSection, setActiveSection] = useState("about")
 
@@ -110,11 +114,9 @@ export default function Component() {
   // Project data
   const projects = {
     "flows-automation": {
-      title: "Flows Automation App",
-      description:
-        "A powerful and intuitive platform that enables seamless integration with leading CRM and e-commerce tools like Shopify, HubSpot, RD Station, and VTEX. Designed to automate communications via SMS and email, handle high-traffic environments, and adapt to complex business logic with ease.",
-      longDescription:
-        "A robust and scalable platform designed to simplify integrations and automation for high-growth businesses. With native support for Shopify, HubSpot, RD Station (Marketing & CRM), VTEX, and Sale U, it empowers teams to connect their tools effortlessly and create powerful, automated workflows without technical barriers.        Built for performance, the platform supports high-traffic environments, real-time data synchronization, and dynamic handling of custom JSON structures and HTTP requests. Users can easily automate personalized SMS and email campaigns, synchronize contacts and product data, and streamline operations—all through an intuitive and user-friendly interface.",
+      title: t("projects.flows.title"),
+      description: t("projects.flows.description"),
+      longDescription: t("projects.flows.longDescription"),
       images: ["/images/flows-home.png", "/images/flows-example.png"],
       technologies: [
         "React",
@@ -132,22 +134,18 @@ export default function Component() {
       githubUrl: "#",
     },
     "chats-metrics": {
-      title: "Chats Metrics Dashboard",
-      description:
-        "A real-time dashboard for visualizing marketing campaign metrics and chat consumption by sales teams, powered by customizable JSON configurations that allow non-developers to manage and adapt data visualizations effortlessly.",
-      longDescription:
-        "An interactive analytics dashboard built to track and visualize marketing campaign performance and chat usage across sales teams in real time. The platform enables businesses to monitor the effectiveness of their advertising efforts, understand conversion behavior, and measure advisor interaction performance at a granular level. What sets this system apart is its admin-friendly configuration model: all visualizations are dynamically generated from a structured JSON schema, allowing non-technical users to define parameters like time ranges, funnel stages, metrics to display, and comparison groups—without touching code. Key capabilities include: Full-funnel campaign tracking (from prospecting to closed deals), Real-time chat activity analysis (delays, transfers, automation vs. agents), High-concurrency performance with fast-rendering UI, Custom HTTP data ingestion and dynamic JSON-based chart definitions, Filters by advisor, brand, or period, fully configurable by operations teams. Ideal for fast-paced marketing and sales environments, this dashboard empowers cross-functional teams to make data-driven decisions with ease and autonomy.",
+      title: t("projects.metrics.title"),
+      description: t("projects.metrics.description"),
+      longDescription: t("projects.metrics.longDescription"),
       images: ["/images/metrics-home.png", "/images/metrics-maps.png"],
       technologies: ["Vue 3", "ECharts", "Chart.js", "Pinia", "FontAwesome"],
       liveUrl: "#",
       githubUrl: "#",
     },
     "sales-chats": {
-      title: "Sales Chats App",
-      description:
-        "A smart sales chat platform powered by AI, designed to manage conversations, create sales opportunities, segment users, launch marketing campaigns, and enable team collaboration through internal chat rooms.",
-      longDescription:
-        "A powerful and intuitive AI-driven sales chat application built to centralize and optimize the commercial workflow of modern teams. The platform enables businesses to manage real-time conversations with leads and clients while integrating features that boost productivity and sales conversion. Users can: Engage in one-on-one sales chats enhanced with AI assistance, Create and track sales cards (opportunities) directly from the conversation, Segment users based on behavior, tags, or funnel stage, Launch targeted sales campaigns via chat, Create internal team rooms or group chats for coordinated sales strategies and client support. Designed for scalability and high interaction volumes, this system merges AI-powered automation with a clean, human-centered interface—making it ideal for teams looking to drive growth through smarter communication.",
+      title: t("projects.chats.title"),
+      description: t("projects.chats.description"),
+      longDescription: t("projects.chats.longDescription"),
       images: ["/images/chat-home.png", "/images/chat-form.png"],
       technologies: ["SwiftUI", "Lottie", "Kingfisher"],
       liveUrl: "#",
@@ -188,10 +186,6 @@ export default function Component() {
               {/* Project Images */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 {projects[selectedProject as keyof typeof projects].images.map((image, index) => {
-                  // Determine if this is a web dashboard (flows/metrics) or mobile app (chat)
-                  const isWebDashboard = selectedProject === "flows-automation" || selectedProject === "chats-metrics"
-                  const isMobileApp = selectedProject === "sales-chats"
-
                   return (
                     <div
                       key={index}
@@ -209,7 +203,7 @@ export default function Component() {
 
               {/* Project Description */}
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-slate-200 mb-3">About this project</h3>
+                <h3 className="text-lg font-semibold text-slate-200 mb-3">{t("projects.aboutProject")}</h3>
                 <p className="text-slate-400 leading-relaxed mb-4">
                   {projects[selectedProject as keyof typeof projects].description}
                 </p>
@@ -227,12 +221,12 @@ export default function Component() {
                 >
                   {showFullDescription ? (
                     <>
-                      Show less
+                      {t("projects.showLess")}
                       <ChevronUp className="ml-1 h-4 w-4" />
                     </>
                   ) : (
                     <>
-                      Read more details
+                      {t("projects.readMore")}
                       <ChevronDown className="ml-1 h-4 w-4" />
                     </>
                   )}
@@ -241,7 +235,7 @@ export default function Component() {
 
               {/* Technologies */}
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-slate-200 mb-3">Technologies Used</h3>
+                <h3 className="text-lg font-semibold text-slate-200 mb-3">{t("projects.technologiesUsed")}</h3>
                 <div className="flex flex-wrap gap-2">
                   {projects[selectedProject as keyof typeof projects].technologies.map((tech, index) => (
                     <span
@@ -263,11 +257,9 @@ export default function Component() {
           {/* Left Column - Fixed Header */}
           <header className="lg:fixed lg:top-0 lg:left-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24 lg:px-24">
             <div>
-              <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">Manuel Montero</h1>
-              <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">Front End Engineer</h2>
-              <p className="mt-4 max-w-xs leading-normal text-slate-400">
-                I build accessible, pixel-perfect digital experiences across web and mobile platforms.
-              </p>
+              <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">{t("header.name")}</h1>
+              <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">{t("header.title")}</h2>
+              <p className="mt-4 max-w-xs leading-normal text-slate-400">{t("header.description")}</p>
 
               {/* Navigation */}
               <nav className="nav hidden lg:block" aria-label="In-page jump links">
@@ -287,7 +279,7 @@ export default function Component() {
                           activeSection === "about" ? "text-slate-200" : "text-slate-500"
                         }`}
                       >
-                        About
+                        {t("nav.about")}
                       </span>
                     </button>
                   </li>
@@ -306,7 +298,7 @@ export default function Component() {
                           activeSection === "experience" ? "text-slate-200" : "text-slate-500"
                         }`}
                       >
-                        Experience
+                        {t("nav.experience")}
                       </span>
                     </button>
                   </li>
@@ -325,7 +317,7 @@ export default function Component() {
                           activeSection === "projects" ? "text-slate-200" : "text-slate-500"
                         }`}
                       >
-                        Projects
+                        {t("nav.projects")}
                       </span>
                     </button>
                   </li>
@@ -333,17 +325,20 @@ export default function Component() {
               </nav>
             </div>
 
-            {/* Social Links */}
-            <ul className="ml-1 mt-8 flex items-center" aria-label="Social media">
-              <li className="mr-5 text-xs shrink-0">
-                <Link
-                  href="https://www.linkedin.com/in/manuel-montero-palencia/"
-                  className="block hover:text-slate-200 transition-colors"
-                >
-                  <Linkedin className="h-6 w-6" />
-                </Link>
-              </li>
-            </ul>
+            {/* Social Links and Language Switcher */}
+            <div className="flex flex-col space-y-4">
+              <LanguageSwitcher />
+              <ul className="ml-1 flex items-center" aria-label="Social media">
+                <li className="mr-5 text-xs shrink-0">
+                  <Link
+                    href="https://www.linkedin.com/in/manuel-montero-palencia/"
+                    className="block hover:text-slate-200 transition-colors"
+                  >
+                    <Linkedin className="h-6 w-6" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </header>
 
           {/* Right Column - Main Content */}
@@ -357,26 +352,14 @@ export default function Component() {
               }`}
             >
               <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">About</h2>
+                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+                  {t("about.title")}
+                </h2>
               </div>
               <div className="text-slate-400">
-                <p className="mb-4">
-                  I'm a software developer passionate about building scalable and intuitive digital experiences across
-                  web and mobile platforms. I enjoy bridging the gap between elegant design and solid engineering,
-                  crafting products that are not only visually engaging but also optimized for performance and
-                  maintainability.
-                </p>
-                <p className="mb-4">
-                  Currently, I work independently on projects that span from high-impact mobile apps to complex web
-                  systems, often collaborating with startups and established companies across Latin America. I
-                  specialize in frontend architecture, cross-platform development with Flutter and SwiftUI, and building
-                  structured, maintainable codebases using Clean Architecture, MVVM, and modern tooling.
-                </p>
-                <p>
-                  Over the years, I've contributed to a wide variety of projects — from banking and electoral software
-                  to e-commerce tools and customer communication platforms. I also have strong experience integrating
-                  REST and GraphQL APIs, and handling real-time data in modern interfaces.
-                </p>
+                <p className="mb-4">{t("about.paragraph1")}</p>
+                <p className="mb-4">{t("about.paragraph2")}</p>
+                <p>{t("about.paragraph3")}</p>
               </div>
             </section>
 
@@ -389,7 +372,9 @@ export default function Component() {
               }`}
             >
               <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">Experience</h2>
+                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+                  {t("experience.title")}
+                </h2>
               </div>
               <div>
                 <ol className="group/list">
@@ -397,7 +382,7 @@ export default function Component() {
                     <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
                       <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-slate-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                       <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
-                        2024 — Present
+                        {t("experience.positions.keybe.period")}
                       </header>
                       <div className="z-10 sm:col-span-6">
                         <h3 className="font-medium leading-snug text-slate-200">
@@ -411,24 +396,16 @@ export default function Component() {
                             >
                               <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                               <span>
-                                Senior Frontend Engineer ·
+                                {t("experience.positions.keybe.title")} ·
                                 <span className="inline-block">
-                                  Keybe AI
+                                  {t("experience.positions.keybe.company")}
                                   <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
                                 </span>
                               </span>
                             </Link>
                           </div>
                         </h3>
-                        <p className="mt-2 text-sm leading-normal">
-                          Design, build, and maintain modern web applications using Vue and React, with a strong focus
-                          on performance, scalability, and code maintainability. Lead migration efforts across
-                          projects—whether upgrading frameworks or transitioning between languages—to ensure smooth,
-                          stable evolutions. Develop and maintain native iOS applications using Swift and SwiftUI,
-                          leveraging modern iOS architecture patterns. Support and improve cross-platform mobile apps
-                          built in Flutter, ensuring consistent user experiences and seamless performance across
-                          devices.
-                        </p>
+                        <p className="mt-2 text-sm leading-normal">{t("experience.positions.keybe.description")}</p>
                         <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
                           <li className="mr-1.5 mt-2">
                             <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
@@ -463,7 +440,7 @@ export default function Component() {
                     <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
                       <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-slate-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                       <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
-                        2022 — 2024
+                        {t("experience.positions.amaris.period")}
                       </header>
                       <div className="z-10 sm:col-span-6">
                         <h3 className="font-medium leading-snug text-slate-200">
@@ -477,22 +454,16 @@ export default function Component() {
                             >
                               <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                               <span>
-                                Experienced Consultant ·
+                                {t("experience.positions.amaris.title")} ·
                                 <span className="inline-block">
-                                  Amaris Consulting
+                                  {t("experience.positions.amaris.company")}
                                   <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
                                 </span>
                               </span>
                             </Link>
                           </div>
                         </h3>
-                        <p className="mt-2 text-sm leading-normal">
-                          Develop and optimize web and mobile applications for high-impact clients such as Banco de
-                          Chile, using React and React Native to deliver robust, scalable solutions. Build tailored web
-                          applications for Sodexo using Vue, aligned with client requirements and modern development
-                          standards. Participate in the selection and onboarding of new developers, mentoring them to
-                          ensure alignment with team practices and project goals.
-                        </p>
+                        <p className="mt-2 text-sm leading-normal">{t("experience.positions.amaris.description")}</p>
                         <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
                           <li className="mr-1.5 mt-2">
                             <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
@@ -502,11 +473,6 @@ export default function Component() {
                           <li className="mr-1.5 mt-2">
                             <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
                               React
-                            </div>
-                          </li>
-                          <li className="mr-1.5 mt-2">
-                            <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
-                              Next
                             </div>
                           </li>
                           <li className="mr-1.5 mt-2">
@@ -527,7 +493,7 @@ export default function Component() {
                     <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
                       <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-slate-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                       <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
-                        2021 — 2022
+                        {t("experience.positions.linktic.period")}
                       </header>
                       <div className="z-10 sm:col-span-6">
                         <h3 className="font-medium leading-snug text-slate-200">
@@ -541,22 +507,16 @@ export default function Component() {
                             >
                               <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                               <span>
-                                Senior Frontend ·
+                                {t("experience.positions.linktic.title")} ·
                                 <span className="inline-block">
-                                  Linktic
+                                  {t("experience.positions.linktic.company")}
                                   <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
                                 </span>
                               </span>
                             </Link>
                           </div>
                         </h3>
-                        <p className="mt-2 text-sm leading-normal">
-                          Developed and deployed web and mobile applications using Vue, React, and Nuxt.js for
-                          large-scale public sector platforms, including electoral software for Colombia's Registraduría
-                          Nacional and tourism-related systems. Applications were designed and optimized to handle high
-                          user traffic, ensuring stability, performance, and responsive experiences across devices using
-                          Capacitor.
-                        </p>
+                        <p className="mt-2 text-sm leading-normal">{t("experience.positions.linktic.description")}</p>
                         <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
                           <li className="mr-1.5 mt-2">
                             <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
@@ -586,7 +546,7 @@ export default function Component() {
                     <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
                       <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-slate-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                       <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
-                        2019 — 2021
+                        {t("experience.positions.tecnoglass.period")}
                       </header>
                       <div className="z-10 sm:col-span-6">
                         <h3 className="font-medium leading-snug text-slate-200">
@@ -600,9 +560,9 @@ export default function Component() {
                             >
                               <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                               <span>
-                                Development Engineer ·
+                                {t("experience.positions.tecnoglass.title")} ·
                                 <span className="inline-block">
-                                  Tecnoglass
+                                  {t("experience.positions.tecnoglass.company")}
                                   <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
                                 </span>
                               </span>
@@ -610,10 +570,7 @@ export default function Component() {
                           </div>
                         </h3>
                         <p className="mt-2 text-sm leading-normal">
-                          Led the frontend development team for internal systems at Tecnoglass, an industrial
-                          manufacturing company. Participated in requirements gathering, developer onboarding, and the
-                          design and deployment of web applications focused on process optimization and workflow
-                          digitalization.
+                          {t("experience.positions.tecnoglass.description")}
                         </p>
                         <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
                           <li className="mr-1.5 mt-2">
@@ -644,7 +601,7 @@ export default function Component() {
                     <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
                       <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-slate-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                       <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
-                        2018 — 2019
+                        {t("experience.positions.emdiem.period")}
                       </header>
                       <div className="z-10 sm:col-span-6">
                         <h3 className="font-medium leading-snug text-slate-200">
@@ -658,21 +615,16 @@ export default function Component() {
                             >
                               <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                               <span>
-                                Frontend Engineer ·
+                                {t("experience.positions.emdiem.title")} ·
                                 <span className="inline-block">
-                                  Emdiem Lab
+                                  {t("experience.positions.emdiem.company")}
                                   <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
                                 </span>
                               </span>
                             </Link>
                           </div>
                         </h3>
-                        <p className="mt-2 text-sm leading-normal">
-                          Started as a backend developer building RESTful APIs with Django REST Framework, later
-                          transitioning to frontend development with Vue.js. Contributed to the development of
-                          administrative dashboards and e-commerce platforms, with a focus on digital solutions for the
-                          radio and transportation industries.
-                        </p>
+                        <p className="mt-2 text-sm leading-normal">{t("experience.positions.emdiem.description")}</p>
                         <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
                           <li className="mr-1.5 mt-2">
                             <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
@@ -702,14 +654,9 @@ export default function Component() {
                   >
                     <span>
                       <span className="border-b border-transparent pb-px transition group-hover:border-teal-300 motion-reduce:transition-none">
-                        View Full
+                        {t("experience.viewResume")}
                       </span>
-                      <span className="whitespace-nowrap">
-                        <span className="border-b border-transparent pb-px transition group-hover:border-teal-300 motion-reduce:transition-none">
-                          Résumé
-                        </span>
-                        <ExternalLink className="ml-1 inline-block h-4 w-4 shrink-0 -translate-y-px transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-focus-visible:-translate-y-1 group-focus-visible:translate-x-1 motion-reduce:transition-none" />
-                      </span>
+                      <ExternalLink className="ml-1 inline-block h-4 w-4 shrink-0 -translate-y-px transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-focus-visible:-translate-y-1 group-focus-visible:translate-x-1 motion-reduce:transition-none" />
                     </span>
                   </Link>
                 </div>
@@ -725,7 +672,9 @@ export default function Component() {
               }`}
             >
               <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">Projects</h2>
+                <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+                  {t("projects.title")}
+                </h2>
               </div>
               <div>
                 <ul className="group/list">
@@ -741,17 +690,12 @@ export default function Component() {
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
-                              Flows Automation App
+                              {t("projects.flows.title")}
                               <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
                             </span>
                           </button>
                         </h3>
-                        <p className="mt-2 text-sm leading-normal">
-                          A robust and scalable platform designed to simplify integrations and automation for
-                          high-growth businesses. With native support for Shopify, HubSpot, RD Station, VTEX, it
-                          empowers teams to connect their tools effortlessly and create powerful, automated workflows
-                          without technical barriers.
-                        </p>
+                        <p className="mt-2 text-sm leading-normal">{t("projects.flows.description")}</p>
                         <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
                           <li className="mr-1.5 mt-2">
                             <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
@@ -801,16 +745,12 @@ export default function Component() {
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
-                              Chats Metrics Dashboard
+                              {t("projects.metrics.title")}
                               <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
                             </span>
                           </button>
                         </h3>
-                        <p className="mt-2 text-sm leading-normal">
-                          A real-time dashboard for visualizing marketing campaign metrics and chat consumption by sales
-                          teams, powered by customizable JSON configurations that allow non-developers to manage and
-                          adapt data visualizations effortlessly.
-                        </p>
+                        <p className="mt-2 text-sm leading-normal">{t("projects.metrics.description")}</p>
                         <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
                           <li className="mr-1.5 mt-2">
                             <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
@@ -860,16 +800,12 @@ export default function Component() {
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
-                              Sales Chats App
+                              {t("projects.chats.title")}
                               <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
                             </span>
                           </button>
                         </h3>
-                        <p className="mt-2 text-sm leading-normal">
-                          A smart sales chat platform powered by AI, designed to manage conversations, create sales
-                          opportunities, segment users, launch marketing campaigns, and enable team collaboration
-                          through internal chat rooms.
-                        </p>
+                        <p className="mt-2 text-sm leading-normal">{t("projects.chats.description")}</p>
                         <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
                           <li className="mr-1.5 mt-2">
                             <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
