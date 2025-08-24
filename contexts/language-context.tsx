@@ -80,10 +80,17 @@ const translations = {
       viewResume: "View Full Résumé",
       present: "Present",
       positions: {
+        global66: {
+          title: "Senior Frontend Engineer",
+          company: "Global66",
+          period: "2025 — Present",
+          description:
+            "Migrating the B2C application of a fintech from NativeScript to Flutter, leading the development of new features and improvements in parallel while transitioning the legacy codebase.",
+        },
         keybe: {
           title: "Senior Frontend Engineer",
           company: "Keybe AI",
-          period: "2024 — Present",
+          period: "2024 — 2025",
           description:
             "Design, build, and maintain modern web applications using Vue and React, with a strong focus on performance, scalability, and code maintainability. Lead migration efforts across projects—whether upgrading frameworks or transitioning between languages—to ensure smooth, stable evolutions. Develop and maintain native iOS applications using Swift and SwiftUI, leveraging modern iOS architecture patterns. Support and improve cross-platform mobile apps built in Flutter, ensuring consistent user experiences and seamless performance across devices.",
         },
@@ -171,6 +178,13 @@ const translations = {
       viewResume: "Ver Currículum Completo",
       present: "Presente",
       positions: {
+        global66: {
+          title: "Ingeniero Frontend Senior",
+          company: "Global66",
+          period: "2025 — Presente",
+          description:
+            "Migrando la aplicación B2C de un fintech de NativeScript a Flutter, liderando el desarrollo de nuevas funcionalidades y mejoras en paralelo mientras se realiza la transición de la base de código legacy.",
+        },
         keybe: {
           title: "Ingeniero Frontend Senior",
           company: "Keybe AI",
